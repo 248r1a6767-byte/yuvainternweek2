@@ -1,0 +1,22 @@
+Variable,Data_Type,Missing_Count,Missing_Pct,Unique_Values,Potential_Issues,Action_Taken
+Row ID,integer,0,0,9994,None (Unique identifier),Retained as primary key
+Order ID,character,0,0,5009,Repeated across multi-item orders (Legitimate),Retained; validated line items per order
+Order Date,character,0,0,1238,String formatted as DD-MM-YYYY; requires date conversion,Parsed using lubridate::dmy() into Order_Date_Clean
+Ship Date,character,0,0,1334,String formatted as DD-MM-YYYY; requires date conversion,Parsed using lubridate::dmy() into Ship_Date_Clean
+Ship Mode,character,0,0,4,None (4 standardized delivery classes),Converted to factor for shipping duration analysis
+Customer ID,character,0,0,793,None (Standardized customer code),Retained for customer portfolio analysis
+Customer Name,character,0,0,793,None (Individual & business account names),Retained for qualitative verification
+Segment,character,0,0,3,None (3 core market segments),Converted to factor for segment benchmarking
+Country,character,0,0,1,Single nation (United States),Retained as geographic scope indicator
+City,character,0,0,531,None (531 unique US cities),Retained for granular geographic lookup
+State,character,0,0,49,None (49 unique US states),Retained for state-level analysis
+Postal Code,character,0,0,631,Zip code format; 11 missing leading zeros if stored as int,Converted to 5-digit character string
+Region,character,0,0,4,None (4 operational geographic quadrants),Converted to factor for regional comparisons
+Product ID,character,0,0,1862,"None (1,862 SKU identifiers)",Retained as SKU tracking key
+Category,character,0,0,3,None (3 primary product classifications),Standardized as primary grouping factor
+Sub-Category,character,0,0,17,None (17 distinct sub-departments),Standardized as detailed grouping factor
+Product Name,character,0,0,1841,"None (1,850 catalog titles)",Retained for outlier drill-down
+Sales,numeric,0,0,5825,"High positive skew; maximum $22,638.48",Retained in native currency ($); verified min > 0
+Quantity,integer,0,0,14,None (Integer count 1-14),Validated integer counts; retained as volume driver
+Discount,numeric,0,0,12,None (Percentage scale 0.0 - 0.8),Validated 0.0-0.8 range; retained as margin factor
+Profit,numeric,0,0,7287,"Extreme positive/negative values; losses up to -$6,600",Validated negative values as commercial losses; retained

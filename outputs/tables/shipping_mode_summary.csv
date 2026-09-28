@@ -1,0 +1,5 @@
+Ship_Mode,Total_Orders,Total_Items,Mean_Days,Median_Days,Min_Days,Max_Days,Std_Dev_Days
+Same Day,264,543,0.04,0,0,1,0.21
+First Class,787,1538,2.18,2,1,3,0.77
+Second Class,964,1945,3.24,3,2,5,1.19
+Standard Class,2994,5968,5.01,5,4,7,1.01
