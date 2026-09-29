@@ -1,0 +1,16 @@
+Project Title: Data Visualization and Insight Communication Using R
+Selected Dataset: Kaggle / Tableau Sample Superstore Dataset (9,994 records, 28 variables)
+Internship Track: Data Analytics & Science (Week 2 Submission)
+GitHub URL: https://github.com/248r1a6767-byte/yuvainternweek2
+
+This submission delivers an end-to-end, high-impact business intelligence and data visualization project executed in R using ggplot2, scales, and tidyverse. The analysis investigates 9,994 commercial line-item transactions spanning four years across 49 US states, communicating actionable operational and financial insights to executive decision-makers through publication-grade visualizations.
+
+The analytical pipeline comprises 8 modular R scripts that ingest the curated Superstore dataset, validate data quality, extract temporal features, and compute granular performance metrics across categories, regions, and customer segments. A total of 11 publication-grade visualizations were engineered at 300 DPI resolution, incorporating professional styling, clear typography, dual-axis indicators, and color palettes optimized for accessibility.
+
+Key empirical insights communicated through the visual suite include:
+1. Category Profitability Asymmetry: Technology dominates overall profitability, generating $145,454.85 in net profit (50.8% of total profit) at a 17.4% margin, whereas Furniture yields a marginal $18,451.27 profit (2.49% margin) despite generating $741,999.80 in sales. Multi-panel visualizations spotlight severe sub-category losses in Tables (-$17,725.48) and Bookcases (-$3,472.56).
+2. The 20% Discount Cliff: Scatter plot regressions and binned performance bars illustrate a sharp non-linear margin collapse when discount rates exceed 20%. Orders with zero discount deliver a healthy 29.77% net margin, whereas discounts above 40% generate catastrophic average losses of -79.23% (Spearman rho = -0.5434).
+3. Regional Disparities: Geographic visualization reveals that the West region achieves the highest operational efficiency ($108,418.45 profit, 14.94% margin) by maintaining controlled discounting (10.9%), while the Central region suffers severe margin compression (7.92% margin) due to pervasive aggressive discounting (24.0% average).
+4. Temporal Dynamics & Fulfillment: Time-series visualizations highlight strong fourth-quarter holiday sales surges (surpassing 34% of annual revenue) and confirm that standard class shipping reliably completes within 3 to 5 business days across all segments.
+
+The complete visual suite and 14 accompanying analytical summary tables have been compiled into a professionally formatted Microsoft Word document (Week2_Superstore_Data_Visualization_Report.docx). All reproducible R code, tabular data, and high-resolution chart assets are fully tracked and accessible in the GitHub repository.
