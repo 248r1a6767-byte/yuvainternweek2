@@ -56,9 +56,13 @@ Week2_Superstore_R_Visualization/
 │   ├── 03_data_quality.R                     # Completeness scan, deduplication, date integrity audit
 │   ├── 04_data_cleaning.R                    # Feature engineering, date parsing, margin calculation
 │   ├── 05_descriptive_analysis.R             # Methods 1-5: stats, frequencies, grouped summaries, correlations
-│   ├── 06_visualizations.R                   # Generation of 11 publication-grade charts (300 DPI)
+│   ├── 06_visualizations.R                   # Generation of 14 publication-grade charts (300 DPI)
 │   ├── 07_outlier_analysis.R                 # Method 6: IQR boundaries, extreme transaction forensics
 │   └── 08_export_results.R                   # Master pipeline orchestration and asset validation
+├── scripts/
+│   ├── run_all.R                             # Master pipeline orchestration runner
+│   ├── generate_console_cards.py             # R terminal execution card generator (PIL)
+│   └── optimize_images.py                    # Lanczos resampling and palette quantization
 ├── visualizations/
 │   ├── 01_sales_by_category.png              # Horizontal bar chart of gross revenue by category
 │   ├── 02_profit_by_category.png             # Comparative bar chart of net profit and margin %
@@ -70,7 +74,18 @@ Week2_Superstore_R_Visualization/
 │   ├── 08_profit_by_subcategory.png          # Diverging horizontal bar chart across 17 sub-categories
 │   ├── 09_profit_boxplot_category.png        # Non-parametric box plots of profit distributions
 │   ├── 10_regional_performance.png           # Dual-metric grouped bar chart across US regions
-│   └── 11_shipping_time_by_mode.png          # Fulfillment duration box plot across shipping tiers
+│   ├── 11_shipping_time_by_mode.png          # Fulfillment duration box plot across shipping tiers
+│   ├── 12_segment_performance.png            # Grouped bar chart of sales, profit, and margin by segment
+│   ├── 13_correlation_heatmap.png            # Correlation tile heatmap (Pearson r and Spearman rho)
+│   └── 14_top_bottom_states_profit.png       # Diverging bar chart of Top 10 vs Bottom 10 states
+├── screenshots/
+│   ├── 01_dataset_ingestion.png              # R terminal card: Ingestion & dimensionality audit
+│   ├── 02_data_quality_audit.png             # R terminal card: Completeness & date logic audit
+│   ├── 03_summary_statistics.png             # R terminal card: Parametric & non-parametric stats
+│   ├── 04_correlation_analysis.png           # R terminal card: Correlation matrix & rank test
+│   ├── 05_regional_segment_aggregation.png   # R terminal card: Grouped regional & segment metrics
+│   ├── 06_outlier_forensics.png              # R terminal card: IQR fences & extreme order audit
+│   └── 07_pipeline_execution_qa.png          # R terminal card: Master QA run log & validation
 ├── outputs/
 │   ├── tables/
 │   │   ├── table1_dataset_structure.csv      # High-level dataset metadata and metrics
@@ -81,6 +96,9 @@ Week2_Superstore_R_Visualization/
 │   │   ├── table5_segment_performance.csv    # Aggregated metrics by customer segment
 │   │   ├── table6_subcategory_profitability.csv # Complete profitability ranking for 17 sub-categories
 │   │   ├── table7_outliers_summary.csv       # IQR outlier limits and anomaly counts
+│   │   ├── table8_top_bottom_states.csv      # Top 10 vs Bottom 10 state performance breakdown
+│   │   ├── table9_discount_bands.csv         # Performance breakdown across 6 discount tiers
+│   │   ├── table10_sales_profit_tiers.csv    # Performance breakdown across 5 sales brackets
 │   │   ├── correlation_matrix_pearson.csv    # Linear correlation coefficients
 │   │   ├── correlation_matrix_spearman.csv   # Monotonic rank correlation coefficients
 │   │   ├── monthly_trend_summary.csv         # 48-month chronological revenue and profit metrics
@@ -90,7 +108,7 @@ Week2_Superstore_R_Visualization/
 │   └── summaries/
 │       └── project_execution_summary.txt     # Complete pipeline validation and runtime log
 ├── report/
-│   └── Week2_Superstore_Data_Visualization_Report.docx # Comprehensive 26-section Word report
+│   └── Week2_Superstore_Data_Visualization_Report.docx # Comprehensive Word report (1.01 MB, 14,990 words)
 ├── generate_doc_report.py                    # Programmatic DOCX generator with styling & figures
 ├── Week2_Superstore_R_Visualization.Rproj     # RStudio project configuration file
 └── README.md                                 # Project documentation

@@ -40,6 +40,9 @@ expected_tables <- c(
   "table5_segment_performance.csv",
   "table6_subcategory_profitability.csv",
   "table7_outliers_summary.csv",
+  "table8_top_bottom_states.csv",
+  "table9_discount_bands.csv",
+  "table10_sales_profit_tiers.csv",
   "correlation_matrix_pearson.csv",
   "correlation_matrix_spearman.csv",
   "monthly_trend_summary.csv",
@@ -59,7 +62,10 @@ expected_charts <- c(
   "08_profit_by_subcategory.png",
   "09_profit_boxplot_category.png",
   "10_regional_performance.png",
-  "11_shipping_time_by_mode.png"
+  "11_shipping_time_by_mode.png",
+  "12_segment_performance.png",
+  "13_correlation_heatmap.png",
+  "14_top_bottom_states_profit.png"
 )
 
 # Audit Tables

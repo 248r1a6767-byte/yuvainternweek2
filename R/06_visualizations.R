@@ -461,4 +461,150 @@ p11 <- ggplot(superstore_clean, aes(x = Ship_Mode, y = Days_to_Ship, fill = Ship
 ggsave(file.path(vis_dir, "11_shipping_time_by_mode.png"), plot = p11, width = 10, height = 6, dpi = 300)
 message("Saved: 11_shipping_time_by_mode.png")
 
-message("All 11 visualizations successfully generated at 300 DPI!")
+# ------------------------------------------------------------------------------
+# VISUALIZATION 12: Customer Segment Performance (Sales, Profit, and Profit Margin)
+# ------------------------------------------------------------------------------
+segment_summary <- superstore_clean %>%
+  group_by(Segment) %>%
+  summarise(
+    Sales  = sum(Sales),
+    Profit = sum(Profit),
+    Margin = (sum(Profit) / sum(Sales)) * 100,
+    .groups = "drop"
+  ) %>%
+  tidyr::pivot_longer(cols = c(Sales, Profit), names_to = "Metric", values_to = "Amount")
+
+p12 <- ggplot(segment_summary, aes(x = Segment, y = Amount, fill = Metric)) +
+  geom_col(position = position_dodge(width = 0.75), width = 0.65) +
+  geom_text(
+    aes(label = paste0("$", format(round(Amount / 1000, 1), nsmall = 1), "K")),
+    position = position_dodge(width = 0.75),
+    vjust = -0.4, size = 3.8, fontface = "bold"
+  ) +
+  scale_y_continuous(
+    labels = dollar_format(prefix = "$", scale = 1e-3, suffix = "K"),
+    expand = expansion(mult = c(0, 0.15))
+  ) +
+  scale_fill_manual(
+    name = "Financial Metric",
+    values = c("Sales" = col_navy, "Profit" = col_teal)
+  ) +
+  annotate(
+    "label", x = 1, y = 800000,
+    label = "Consumer Segment\nSales: $1,161.4K (50.6%)\nProfit: $134.1K (46.8%)\nMargin: 11.6%",
+    fill = "#F0F4F8", color = col_navy, fontface = "bold", size = 3.3
+  ) +
+  annotate(
+    "label", x = 2, y = 800000,
+    label = "Corporate Segment\nSales: $706.1K (30.7%)\nProfit: $92.0K (32.1%)\nMargin: 13.0%",
+    fill = "#F0F4F8", color = col_navy, fontface = "bold", size = 3.3
+  ) +
+  annotate(
+    "label", x = 3, y = 800000,
+    label = "Home Office Segment\nSales: $429.7K (18.7%)\nProfit: $60.3K (21.1%)\nMargin: 14.0%",
+    fill = "#F0F4F8", color = col_navy, fontface = "bold", size = 3.3
+  ) +
+  labs(
+    title = "Visualization 12: Sales and Net Profit Performance Across Customer Segments",
+    subtitle = "Consumer delivers half of all sales ($1.16M), but Home Office achieves the highest commercial margin efficiency (14.0%)",
+    x = "Customer Portfolio Segment",
+    y = "Total Financial Amount (USD)",
+    caption = "Source: Superstore Dataset (3 customer segments, 2011–2014) | Margin calculated as sum(Profit)/sum(Sales)*100"
+  ) +
+  theme_superstore()
+
+ggsave(file.path(vis_dir, "12_segment_performance.png"), plot = p12, width = 10, height = 6, dpi = 300)
+message("Saved: 12_segment_performance.png")
+
+# ------------------------------------------------------------------------------
+# VISUALIZATION 13: Correlation Matrix Heatmap (Pearson Linear & Spearman Rank)
+# ------------------------------------------------------------------------------
+corr_vars <- superstore_clean %>% select(Sales, Quantity, Discount, Profit)
+corr_matrix <- cor(corr_vars, method = "pearson")
+corr_df <- as.data.frame(as.table(corr_matrix))
+colnames(corr_df) <- c("Var1", "Var2", "Correlation")
+
+p13 <- ggplot(corr_df, aes(x = Var1, y = Var2, fill = Correlation)) +
+  geom_tile(color = "white", linewidth = 1.2) +
+  geom_text(
+    aes(label = sprintf("%.3f", Correlation)),
+    color = ifelse(abs(corr_df$Correlation) > 0.4 & corr_df$Correlation < 0.99, "white", "#1B263B"),
+    fontface = "bold", size = 5.2
+  ) +
+  scale_fill_gradient2(
+    low = col_crimson, mid = "white", high = col_teal,
+    midpoint = 0, limit = c(-1, 1),
+    name = "Pearson\nCorrelation"
+  ) +
+  labs(
+    title = "Visualization 13: Correlation Heatmap Among Transactional Numerical Variables",
+    subtitle = "Sales correlates positively with Profit (r = +0.479), while Discount displays a significant inverse association (r = -0.220)",
+    x = "Analytical Variable",
+    y = "Analytical Variable",
+    caption = "Source: Superstore Dataset (9,994 records) | Spearman rank correlation for Discount vs Profit is even stronger: rs = -0.543"
+  ) +
+  theme_superstore() +
+  theme(
+    panel.grid = element_blank(),
+    axis.text = element_text(size = 11, face = "bold", color = "#1B263B")
+  )
+
+ggsave(file.path(vis_dir, "13_correlation_heatmap.png"), plot = p13, width = 10, height = 6.5, dpi = 300)
+message("Saved: 13_correlation_heatmap.png")
+
+# ------------------------------------------------------------------------------
+# VISUALIZATION 14: Geographic Profitability Extremes (Top 10 vs Bottom 10 States)
+# ------------------------------------------------------------------------------
+state_perf <- superstore_clean %>%
+  group_by(State) %>%
+  summarise(
+    Total_Profit = sum(Profit),
+    Total_Sales  = sum(Sales),
+    Margin_Pct   = (sum(Profit) / sum(Sales)) * 100,
+    .groups = "drop"
+  ) %>%
+  arrange(desc(Total_Profit))
+
+top_10 <- head(state_perf, 10) %>% mutate(Tier = "Top 10 Profitable")
+bot_10 <- tail(state_perf, 10) %>% mutate(Tier = "Bottom 10 Deficit")
+state_top_bot <- bind_rows(top_10, bot_10) %>%
+  mutate(
+    Is_Positive = Total_Profit >= 0,
+    Profit_Label = paste0(ifelse(Total_Profit >= 0, "+$", "-$"),
+                          format(abs(round(Total_Profit / 1000, 1)), nsmall = 1), "K")
+  )
+
+p14 <- ggplot(state_top_bot, aes(x = reorder(State, Total_Profit), y = Total_Profit, fill = Is_Positive)) +
+  geom_col(width = 0.72) +
+  geom_hline(yintercept = 0, color = "black", linewidth = 0.9) +
+  geom_text(
+    aes(
+      label = Profit_Label,
+      hjust = ifelse(Total_Profit >= 0, -0.15, 1.15)
+    ),
+    size = 3.6, fontface = "bold"
+  ) +
+  coord_flip() +
+  scale_y_continuous(
+    labels = dollar_format(prefix = "$", scale = 1e-3, suffix = "K"),
+    expand = expansion(mult = c(0.20, 0.22))
+  ) +
+  scale_fill_manual(
+    name = "Performance Status",
+    values = c("TRUE" = col_teal, "FALSE" = col_crimson),
+    labels = c("TRUE" = "Net Profitable State", "FALSE" = "Net Deficit / Loss State")
+  ) +
+  labs(
+    title = "Visualization 14: Net Profitability Extremes Across US States (Top 10 vs Bottom 10)",
+    subtitle = "California (+$76.4K) and New York (+$74.0K) anchor profits, while Texas (-$25.7K) and Ohio (-$17.0K) generate massive deficits",
+    x = "US Delivery State",
+    y = "Cumulative Net Profit / Loss in USD",
+    caption = "Source: Superstore Dataset (49 US states, 2011–2014) | Aggressive promotional discounting in Texas and Ohio drives structural losses"
+  ) +
+  theme_superstore()
+
+ggsave(file.path(vis_dir, "14_top_bottom_states_profit.png"), plot = p14, width = 10, height = 7.5, dpi = 300)
+message("Saved: 14_top_bottom_states_profit.png")
+
+message("All 14 visualizations successfully generated at 300 DPI!")
+

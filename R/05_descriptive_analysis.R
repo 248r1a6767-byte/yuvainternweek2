@@ -205,6 +205,88 @@ shipping_summary <- superstore_clean %>%
 write_csv(shipping_summary, file.path("outputs", "tables", "shipping_mode_summary.csv"))
 
 # ------------------------------------------------------------------------------
+# METHOD 9: State Performance (Top 10 and Bottom 10 States by Profit)
+# ------------------------------------------------------------------------------
+state_perf <- superstore_clean %>%
+  group_by(State, Region) %>%
+  summarise(
+    Total_Sales    = round(sum(Sales), 2),
+    Total_Profit   = round(sum(Profit), 2),
+    Overall_Margin = round((sum(Profit) / sum(Sales)) * 100, 2),
+    Avg_Discount   = round(mean(Discount) * 100, 2),
+    Total_Orders   = n_distinct(Order_ID),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(Total_Profit))
+
+top_10_states <- head(state_perf, 10) %>% mutate(Group = "Top 10 Profitable")
+bottom_10_states <- tail(state_perf, 10) %>% mutate(Group = "Bottom 10 Loss-Making")
+table8_top_bottom_states <- bind_rows(top_10_states, bottom_10_states)
+
+write_csv(table8_top_bottom_states, file.path("outputs", "tables", "table8_top_bottom_states.csv"))
+
+# ------------------------------------------------------------------------------
+# METHOD 10: Discount Band Performance Analysis
+# ------------------------------------------------------------------------------
+table9_discount_bands <- superstore_clean %>%
+  mutate(
+    Discount_Band = case_when(
+      Discount == 0        ~ "0% (No Discount)",
+      Discount <= 0.10     ~ "0.1% - 10%",
+      Discount <= 0.20     ~ "10.1% - 20%",
+      Discount <= 0.30     ~ "20.1% - 30%",
+      Discount <= 0.50     ~ "30.1% - 50%",
+      TRUE                 ~ "> 50%"
+    ),
+    Discount_Band = factor(Discount_Band, levels = c(
+      "0% (No Discount)", "0.1% - 10%", "10.1% - 20%", "20.1% - 30%", "30.1% - 50%", "> 50%"
+    ))
+  ) %>%
+  group_by(Discount_Band) %>%
+  summarise(
+    Transactions   = n(),
+    Total_Sales    = round(sum(Sales), 2),
+    Sales_Share    = round((sum(Sales) / sum(superstore_clean$Sales)) * 100, 2),
+    Total_Profit   = round(sum(Profit), 2),
+    Profit_Share   = round((sum(Profit) / sum(superstore_clean$Profit)) * 100, 2),
+    Overall_Margin = round((sum(Profit) / sum(Sales)) * 100, 2),
+    Total_Orders   = n_distinct(Order_ID),
+    .groups = "drop"
+  )
+
+write_csv(table9_discount_bands, file.path("outputs", "tables", "table9_discount_bands.csv"))
+
+# ------------------------------------------------------------------------------
+# METHOD 11: Sales Tier Performance Analysis
+# ------------------------------------------------------------------------------
+table10_sales_tiers <- superstore_clean %>%
+  mutate(
+    Sales_Tier = case_when(
+      Sales < 100   ~ "Tier 1: < $100",
+      Sales < 500   ~ "Tier 2: $100 - $499",
+      Sales < 1000  ~ "Tier 3: $500 - $999",
+      Sales < 5000  ~ "Tier 4: $1,000 - $4,999",
+      TRUE          ~ "Tier 5: >= $5,000"
+    ),
+    Sales_Tier = factor(Sales_Tier, levels = c(
+      "Tier 1: < $100", "Tier 2: $100 - $499", "Tier 3: $500 - $999", "Tier 4: $1,000 - $4,999", "Tier 5: >= $5,000"
+    ))
+  ) %>%
+  group_by(Sales_Tier) %>%
+  summarise(
+    Transactions   = n(),
+    Total_Sales    = round(sum(Sales), 2),
+    Sales_Share    = round((sum(Sales) / sum(superstore_clean$Sales)) * 100, 2),
+    Total_Profit   = round(sum(Profit), 2),
+    Profit_Share   = round((sum(Profit) / sum(superstore_clean$Profit)) * 100, 2),
+    Overall_Margin = round((sum(Profit) / sum(Sales)) * 100, 2),
+    .groups = "drop"
+  )
+
+write_csv(table10_sales_tiers, file.path("outputs", "tables", "table10_sales_profit_tiers.csv"))
+
+
+# ------------------------------------------------------------------------------
 # Print Summary Highlights to Console
 # ------------------------------------------------------------------------------
 cat("\n=======================================================\n")

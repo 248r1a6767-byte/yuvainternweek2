@@ -1,0 +1,21 @@
+State,Region,Total_Sales,Total_Profit,Overall_Margin,Avg_Discount,Total_Orders,Group
+California,West,457687.63,76381.39,16.69,7.28,1021,Top 10 Profitable
+New York,East,310876.27,74038.55,23.82,5.53,562,Top 10 Profitable
+Washington,West,138641.27,33402.65,24.09,6.4,256,Top 10 Profitable
+Michigan,Central,76269.61,24463.19,32.07,0.71,117,Top 10 Profitable
+Virginia,South,70636.72,18597.95,26.33,0,115,Top 10 Profitable
+Indiana,Central,53555.36,18382.94,34.33,0,73,Top 10 Profitable
+Georgia,South,49095.84,16250.04,33.1,0,91,Top 10 Profitable
+Kentucky,South,36591.75,11199.7,30.61,0,61,Top 10 Profitable
+Minnesota,Central,29863.15,10823.19,36.24,0,44,Top 10 Profitable
+Delaware,East,27451.07,9977.37,36.35,0.62,44,Top 10 Profitable
+Oregon,West,17431.15,-1190.47,-6.83,28.87,56,Bottom 10 Loss-Making
+Florida,South,89473.71,-3399.3,-3.8,29.93,200,Bottom 10 Loss-Making
+Arizona,West,35282,-3427.92,-9.72,30.36,108,Bottom 10 Loss-Making
+Tennessee,South,30661.87,-5341.69,-17.42,29.13,91,Bottom 10 Loss-Making
+Colorado,West,32108.12,-6527.86,-20.33,31.65,79,Bottom 10 Loss-Making
+North Carolina,South,55603.16,-7490.91,-13.47,28.35,136,Bottom 10 Loss-Making
+Illinois,Central,80166.1,-12607.89,-15.73,39,276,Bottom 10 Loss-Making
+Pennsylvania,East,116511.91,-15559.96,-13.35,32.86,288,Bottom 10 Loss-Making
+Ohio,East,78258.14,-16971.38,-21.69,32.49,236,Bottom 10 Loss-Making
+Texas,Central,170188.05,-25729.36,-15.12,37.02,487,Bottom 10 Loss-Making

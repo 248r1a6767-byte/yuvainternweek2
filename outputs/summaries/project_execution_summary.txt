@@ -1,8 +1,8 @@
 ==============================================================================
                WEEK 2 INTERNSHIP PROJECT EXECUTION SUMMARY                    
 ==============================================================================
-Execution Timestamp : 2026-09-28 20:58:40.099122
-Total Elapsed Time  : 8.15 seconds
+Execution Timestamp : 2026-10-02 13:51:28.849409
+Total Elapsed Time  : 7.18 seconds
 R Version           : R version 4.6.1 (2026-06-24 ucrt)
 Platform            : x86_64-w64-mingw32
 ------------------------------------------------------------------------------
@@ -23,6 +23,9 @@ Platform            : x86_64-w64-mingw32
    [PASS] table5_segment_performance.csv
    [PASS] table6_subcategory_profitability.csv
    [PASS] table7_outliers_summary.csv
+   [PASS] table8_top_bottom_states.csv
+   [PASS] table9_discount_bands.csv
+   [PASS] table10_sales_profit_tiers.csv
    [PASS] correlation_matrix_pearson.csv
    [PASS] correlation_matrix_spearman.csv
    [PASS] monthly_trend_summary.csv
@@ -42,6 +45,9 @@ Platform            : x86_64-w64-mingw32
    [PASS] 09_profit_boxplot_category.png   (Size:  192.0 KB)
    [PASS] 10_regional_performance.png      (Size:  108.6 KB)
    [PASS] 11_shipping_time_by_mode.png     (Size:  104.7 KB)
+   [PASS] 12_segment_performance.png       (Size:  131.9 KB)
+   [PASS] 13_correlation_heatmap.png       (Size:  121.6 KB)
+   [PASS] 14_top_bottom_states_profit.png  (Size:  172.1 KB)
 ==============================================================================
 STATUS: ALL ANALYTICAL ASSETS AND VISUALIZATIONS GENERATED SUCCESSFULLY.
 ==============================================================================
